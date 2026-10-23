@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Legend of Medusa | EdTechra Interactive Storybook</title>
+  <meta name="description" content="An interactive mythology storybook for English language learners (A1-A2). Discover the legend of Medusa with audio narration, clickable vocabulary, and guided visual activities.">
+  
+  <!-- Google Fonts: Cinzel for Ancient Greek titles, Cormorant Garamond for elegant accents, Inter for learner clarity -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Audio Element -->
+  <audio id="bg-music" src="Columns_in_the_Mist.mp3" loop preload="auto" aria-hidden="true"></audio>
+
+  <!-- Top Platform Header -->
+  <header class="platform-header" role="banner">
+    <div class="header-inner container">
+      <div class="brand">
+        <span class="brand-badge">EDTECHRA</span>
+        <span class="series-name">Mythology Reader Series</span>
+      </div>
+      
+      <div class="header-controls">
+        <button id="btn-toggle-music" class="control-pill" aria-label="Toggle background music" title="Toggle background music">
+          <span class="icon">🎵</span>
+          <span class="label">Music <strong id="music-state-text">OFF</strong></span>
+        </button>
+        <button id="btn-toggle-sound" class="control-pill" aria-label="Toggle narration sound" title="Toggle narration sound">
+          <span class="icon" id="sound-icon">🔊</span>
+          <span class="label">Sound <strong id="sound-state-text">ON</strong></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Wrapper -->
+  <main id="app-container" class="main-content" role="main">
+    
+    <!-- Welcome / Cover Screen -->
+    <section id="cover-screen" class="view-screen active" aria-labelledby="cover-title">
+      <div class="container cover-card">
+        <div class="greek-ornament top-ornament" aria-hidden="true">❖ ─── 🏛️ ─── ❖</div>
+        <div class="cefr-badge-wrapper">
+          <span class="cefr-badge" aria-label="CEFR Level">English Level: A1–A2</span>
+          <span class="reading-time">⏱️ ~3 min read</span>
+        </div>
+        <h1 id="cover-title" class="main-title">THE LEGEND OF MEDUSA</h1>
+        <p class="main-subtitle">A mysterious story from Ancient Greece</p>
+        
+        <div class="cover-image-preview">
+          <img src="Gemini_Generated_Image_46rlz446rlz446rl.jpg" alt="Medusa in Ancient Greece beside temple columns" class="preview-img">
+          <div class="cover-glow"></div>
+        </div>
+
+        <p class="cover-intro">
+          Step into ancient mythology. Listen to the story, explore ancient artwork, learn new English words, and discover the truth behind the legend.
+        </p>
+
+        <div class="cover-actions">
+          <button id="btn-start-story" class="btn-primary" aria-label="Begin the interactive story">
+            <span>Begin Story</span>
+            <span class="arrow-icon">➔</span>
+          </button>
+        </div>
+        <div class="greek-ornament bottom-ornament" aria-hidden="true">❖ ────────── ❖</div>
+      </div>
+    </section>
+
+    <!-- Chapter Reading View -->
+    <section id="story-screen" class="view-screen" aria-live="polite">
+      <div class="container story-layout">
+        
+        <!-- Story Progress Bar -->
+        <nav class="story-progress-bar" aria-label="Story Progress">
+          <div class="progress-meta">
+            <span id="chapter-step-label" class="step-label">CHAPTER 1 OF 5</span>
+            <span id="reading-mode-hint" class="mode-hint">Tap vocabulary to see meanings</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progress-track">
+            <div id="progress-fill" class="progress-fill" style="width: 20%;"></div>
+          </div>
+          <div class="progress-dots" id="progress-dots" aria-hidden="true">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </nav>
+
+        <!-- Chapter Card (Dual Column on Desktop, Image First on Mobile) -->
+        <article class="chapter-card" id="chapter-card">
+          
+          <!-- Visual Artwork Section -->
+          <div class="chapter-visual-section">
+            <div class="image-frame" id="image-frame">
+              <img id="chapter-image" src="" alt="Story illustration" class="chapter-img">
+              <div class="image-overlay-vignette" aria-hidden="true"></div>
+              
+              <!-- Explore Image Floating Badge -->
+              <button id="btn-explore-image" class="explore-btn" aria-label="Explore image details">
+                <span class="explore-icon">🔍</span>
+                <span class="explore-text">Explore Image</span>
+              </button>
+
+              <div class="image-corner-controls">
+                <!-- Fit / Fill Mode Toggle -->
+                <button id="btn-fit-toggle" class="control-sub-btn" aria-label="Toggle Image Framing" title="Toggle between Fit Full Image and Fill Frame">
+                  <span class="fit-icon" id="fit-icon">🖼️</span>
+                  <span class="fit-label" id="fit-label">Fit Full</span>
+                </button>
+
+                <!-- Image Enlarge Button -->
+                <button id="btn-zoom-image" class="zoom-btn" aria-label="View full image in large screen" title="Enlarge image in fullscreen lightbox">
+                  <span aria-hidden="true">⛶</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Narrative Content Section -->
+          <div class="chapter-content-section">
+            <header class="chapter-header">
+              <div class="chapter-number-tag" id="chapter-number">01 — BEFORE THE CURSE</div>
+              <h2 class="chapter-title" id="chapter-title">Medusa the Maiden</h2>
+            </header>
+
+            <!-- Narration Toolbar -->
+            <div class="narration-bar" role="region" aria-label="Audio Narration Player">
+              <button id="btn-play-audio" class="audio-control-btn primary-audio" aria-label="Listen to chapter">
+                <span class="audio-icon" id="audio-play-icon">🔊</span>
+                <span id="audio-btn-label">Listen</span>
+              </button>
+              
+              <button id="btn-pause-audio" class="audio-control-btn" aria-label="Pause narration" disabled>
+                <span class="audio-icon">⏸</span>
+                <span>Pause</span>
+              </button>
+
+              <button id="btn-replay-audio" class="audio-control-btn" aria-label="Replay chapter narration">
+                <span class="audio-icon">↻</span>
+                <span>Replay</span>
+              </button>
+
+              <div class="audio-status-indicator" id="audio-status" aria-live="polite">
+                <span class="pulse-dot" aria-hidden="true"></span>
+                <span class="status-msg">Ready to listen</span>
+              </div>
+            </div>
+
+            <!-- Story Text Container (Sentence Highlightable & Vocab Clickable) -->
+            <div class="parchment-scroll">
+              <div class="story-text" id="story-text" tabindex="0" role="region" aria-label="Chapter story text">
+                <!-- Injected via JavaScript with interactive spans -->
+              </div>
+            </div>
+
+            <!-- In-Chapter Mini Interaction -->
+            <div class="mini-interaction-container" id="interaction-container">
+              <div class="interaction-card">
+                <div class="interaction-header">
+                  <span class="quest-icon">⚡</span>
+                  <span class="interaction-label">Story Check</span>
+                </div>
+                <p class="interaction-question" id="interaction-question">Question text...</p>
+                <div class="interaction-options" id="interaction-options">
+                  <!-- Injected via JS -->
+                </div>
+                <div class="interaction-feedback" id="interaction-feedback" aria-live="polite" style="display: none;">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Story Navigation -->
+            <footer class="chapter-navigation" role="navigation" aria-label="Chapter Navigation">
+              <button id="btn-prev-chapter" class="nav-btn prev-btn" aria-label="Go to previous chapter">
+                <span aria-hidden="true">←</span>
+                <span>Previous</span>
+              </button>
+              
+              <div class="nav-middle-indicator">
+                <span id="nav-chapter-indicator">Chapter 1 of 5</span>
+              </div>
+
+              <button id="btn-next-chapter" class="nav-btn next-btn" aria-label="Go to next chapter">
+                <span>Next</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </footer>
+
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Final Ending Screen -->
+    <section id="ending-screen" class="view-screen" aria-labelledby="ending-title">
+      <div class="container ending-card">
+        <div class="greek-ornament top-ornament" aria-hidden="true">❖ ─── 🛡️ ─── ❖</div>
+        <div class="ending-badge">THE LEGEND ENDS</div>
+        <h2 id="ending-title" class="ending-title">A Story With More Than One Side</h2>
+        
+        <div class="ending-hero-visual">
+          <img src="Gemini_Generated_Image_7fnlmn7fnlmn7fnl.jpg" alt="Perseus in Ancient Greece with the legendary golden Gorgon shield" class="ending-img">
+          <div class="hero-caption">Athena's golden shield bearing the image of Medusa</div>
+        </div>
+
+        <div class="learning-recap">
+          <h3 class="recap-title">What did you learn?</h3>
+          <ul class="recap-list">
+            <li class="recap-item">
+              <span class="recap-icon">📖</span>
+              <div class="recap-text">
+                <strong>Medusa was a famous figure</strong> in Greek mythology who was once a peaceful young woman.
+              </div>
+            </li>
+            <li class="recap-item">
+              <span class="recap-icon">🐍</span>
+              <div class="recap-text">
+                <strong>She was transformed into a Gorgon</strong> with living snakes for hair after a terrible curse.
+              </div>
+            </li>
+            <li class="recap-item">
+              <span class="recap-icon">🛡️</span>
+              <div class="recap-text">
+                <strong>Perseus defeated her safely</strong> by using the reflection in his polished bronze shield.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="ending-quote">
+          <blockquote>“The legend of Medusa reminds us that every story can have more than one side.”</blockquote>
+        </div>
+
+        <div class="ending-actions">
+          <button id="btn-play-again" class="btn-primary" aria-label="Play the story again from Chapter 1">
+            <span class="icon">↻</span>
+            <span>PLAY AGAIN</span>
+          </button>
+          <button id="btn-exit-story" class="btn-secondary" aria-label="Return to cover screen">
+            <span>EXIT</span>
+          </button>
+        </div>
+        <div class="greek-ornament bottom-ornament" aria-hidden="true">❖ ────────── ❖</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Explore Image Modal Overlay -->
+  <div id="modal-explore-image" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="explore-modal-title" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content explore-modal-box">
+      <button class="modal-close-btn" id="btn-close-explore" aria-label="Close image exploration">✕</button>
+      <div class="modal-header">
+        <span class="modal-tag">IMAGE ACTIVITY</span>
+        <h3 id="explore-modal-title" class="modal-title">Look carefully. What can you see?</h3>
+      </div>
+      
+      <div class="explore-modal-body">
+        <div class="explore-modal-img-wrap">
+          <img id="explore-modal-img" src="" alt="Zoomed view of current chapter artwork">
+        </div>
+        
+        <div class="explore-observations">
+          <h4 class="obs-heading">Key Observations:</h4>
+          <ul id="explore-obs-list" class="obs-list">
+            <!-- Dynamic observation items injected via JS -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-primary modal-action-btn" id="btn-got-it-explore">Got It!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vocabulary Definition Modal / Popup -->
+  <div id="modal-vocabulary" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="vocab-modal-word" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content vocab-modal-box">
+      <button class="modal-close-btn" id="btn-close-vocab" aria-label="Close vocabulary card">✕</button>
+      
+      <div class="vocab-card-header">
+        <span class="vocab-badge">WORD EXPLORER</span>
+        <h3 id="vocab-modal-word" class="vocab-word">REFLECTION</h3>
+        <span id="vocab-modal-part" class="vocab-part-of-speech">noun</span>
+      </div>
+
+      <div class="vocab-card-body">
+        <div class="vocab-section">
+          <span class="vocab-label">Meaning:</span>
+          <p id="vocab-modal-meaning" class="vocab-definition">The image you see in a mirror or shiny surface.</p>
+        </div>
+
+        <div class="vocab-section example-section">
+          <span class="vocab-label">Example:</span>
+          <p id="vocab-modal-example" class="vocab-example">“Perseus saw Medusa in the reflection.”</p>
+        </div>
+      </div>
+
+      <div class="vocab-card-footer">
+        <button id="btn-pronounce-word" class="audio-pronounce-btn" aria-label="Listen to word pronunciation">
+          <span>🔊 Pronounce</span>
+        </button>
+        <button id="btn-close-vocab-action" class="btn-secondary vocab-done-btn">Back to Story</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Lightbox Modal -->
+  <div id="modal-lightbox" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Enlarged image view" style="display: none;">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close-btn" id="btn-close-lightbox" aria-label="Close image preview">✕</button>
+      <img id="lightbox-img" src="" alt="Enlarged artwork">
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
